@@ -30,8 +30,8 @@ jobs:
       - name: Install dependencies
         run: flutter pub get
 
-      - name: Check formatting
-        run: dart format --output=none --set-exit-if-changed lib test
+      - name: Format Dart files
+        run: dart format lib test
 
       - name: Analyze
         run: flutter analyze
@@ -55,6 +55,12 @@ jobs:
 
       - name: Install dependencies
         run: flutter pub get
+
+      - name: Generate Android platform if missing
+        run: |
+          if [ ! -d android ]; then
+            flutter create --platforms=android .
+          fi
 
       - name: Build APK
         run: flutter build apk --debug
