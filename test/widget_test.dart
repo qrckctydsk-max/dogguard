@@ -5,11 +5,11 @@ import 'package:dogguard/features/rescue/rescue_page.dart';
 import 'package:dogguard/features/dogs/dogs_page.dart';
 
 void main() {
-  testWidgets('DogGuard login renders', (tester) async {
+  testWidgets('DogGuard demo login renders with honest labeling', (tester) async {
     await tester.pumpWidget(const DogGuardApp());
     expect(find.text('DogGuard'), findsOneWidget);
-    expect(find.text('Einloggen'), findsOneWidget);
-    expect(find.text('Alpha testen ohne Konto'), findsOneWidget);
+    expect(find.text('Demo öffnen'), findsOneWidget);
+    expect(find.textContaining('Es findet keine echte Anmeldung statt'), findsOneWidget);
   });
 
   testWidgets('Dog profiles can be added locally with validation', (tester) async {
@@ -34,7 +34,7 @@ void main() {
     expect(find.textContaining('während dieser Sitzung'), findsOneWidget);
   });
 
-  testWidgets('Rescue screen clearly says that no real report is sent', (tester) async {
+  testWidgets('Rescue flow states reports are local only', (tester) async {
     await tester.pumpWidget(const MaterialApp(home: RescuePage()));
     expect(find.text('DogGuard Rescue'), findsOneWidget);
     expect(find.textContaining('sendet keine SOS-Nachricht'), findsOneWidget);
