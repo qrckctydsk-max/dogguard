@@ -39,6 +39,25 @@ jobs:
       - name: Run tests
         run: flutter test
 
+  ios-simulator-build:
+    name: Build iOS app (unsigned, simulator validation)
+    runs-on: macos-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      - name: Build iOS without code signing
+        run: flutter build ios --release --no-codesign
+
   android-debug:
     name: Build Android debug APK
     runs-on: ubuntu-latest
