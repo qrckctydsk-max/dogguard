@@ -57,7 +57,7 @@ class _RescuePageState extends State<RescuePage> {
                   ),
                   const SizedBox(height: 16),
                   DropdownButtonFormField<String>(
-                    value: _kind,
+                    initialValue: _kind,
                     decoration: const InputDecoration(labelText: 'Art der Meldung'),
                     items: const [
                       DropdownMenuItem(value: 'Vermisst', child: Text('Hund vermisst')),
