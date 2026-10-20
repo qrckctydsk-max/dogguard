@@ -17,27 +17,39 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-
       - name: Set up Flutter
         uses: subosito/flutter-action@v2
         with:
           channel: stable
           cache: true
-
       - name: Show Flutter version
         run: flutter --version
-
       - name: Install dependencies
         run: flutter pub get
-
       - name: Format Dart files
         run: dart format lib test
-
       - name: Analyze
         run: flutter analyze
-
       - name: Run tests
         run: flutter test
+
+  ios-simulator-build:
+    name: Build iOS app (unsigned validation)
+    runs-on: macos-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+      - name: Install dependencies
+        run: flutter pub get
+      - name: Generate native platform scaffolding
+        run: flutter create --platforms=ios,android .
+      - name: Build iOS without code signing
+        run: flutter build ios --release --no-codesign
 
   android-debug:
     name: Build Android debug APK
@@ -46,25 +58,20 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-
       - name: Set up Flutter
         uses: subosito/flutter-action@v2
         with:
           channel: stable
           cache: true
-
       - name: Install dependencies
         run: flutter pub get
-
       - name: Generate Android platform if missing
         run: |
           if [ ! -d android ]; then
             flutter create --platforms=android .
           fi
-
       - name: Build APK
         run: flutter build apk --debug
-
       - name: Upload debug APK
         uses: actions/upload-artifact@v4
         with:
