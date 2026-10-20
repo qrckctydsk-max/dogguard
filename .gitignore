@@ -15,6 +15,11 @@ build/
 # Secrets and local config
 .env
 .env.*
+!.env.example
+.dev.vars
+.dev.vars.*
 *.pem
 *.key
+*.p12
+*.mobileprovision
 openai-api-key.txt
