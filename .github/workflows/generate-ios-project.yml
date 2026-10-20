@@ -1,0 +1,53 @@
+name: Generate DogGuard iOS project
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  generate-ios:
+    runs-on: macos-latest
+    steps:
+      - name: Checkout iOS setup branch
+        uses: actions/checkout@v4
+        with:
+          ref: ios-project-setup
+          fetch-depth: 0
+
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+
+      - name: Generate native iOS platform files
+        run: flutter create --platforms=ios --org com.credibilitylions --project-name dogguard .
+
+      - name: Install Flutter dependencies
+        run: flutter pub get
+
+      - name: Commit generated iOS project
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add ios
+          if git diff --cached --quiet; then
+            echo "No iOS scaffold changes to commit."
+          else
+            git commit -m "Generate native iOS project scaffold"
+            git push origin ios-project-setup
+          fi
+
+      - name: Validate unsigned iOS simulator build
+        run: flutter build ios --simulator --no-codesign
+
+      - name: Upload unsigned simulator app
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: dogguard-ios-simulator
+          path: build/ios/iphonesimulator/Runner.app
+          if-no-files-found: ignore
+          retention-days: 7
