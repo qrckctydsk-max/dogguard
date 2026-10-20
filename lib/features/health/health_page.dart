@@ -56,7 +56,7 @@ class _HealthPageState extends State<HealthPage> {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   DropdownButtonFormField<HealthRecordKind>(
-                    value: kind,
+                    initialValue: kind,
                     decoration: const InputDecoration(labelText: 'Kategorie'),
                     items: HealthRecordKind.values.map((item) => DropdownMenuItem(
                       value: item,
