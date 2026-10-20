@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:dogguard/app.dart';
-import 'package:dogguard/features/rescue/rescue_page.dart';
-import 'package:dogguard/features/dogs/dogs_page.dart';
+import 'package:dogguard/features.rescue/rescue_page.dart';
+import 'package:dogguard/features.dogs/dogs_page.dart';
 
 void main() {
   testWidgets('DogGuard demo login renders with honest labeling', (tester) async {
@@ -14,11 +14,11 @@ void main() {
 
   testWidgets('Dog profiles can be added locally with validation', (tester) async {
     await tester.pumpWidget(const MaterialApp(home: DogsPage()));
-    await tester.tap(find.text('Hund hinzufügen'));
+    await tester.tap(find.widgetWithText(FilledButton, 'Hund hinzufügen'));
     await tester.pumpAndSettle();
 
-    expect(find.text('Hund hinzufügen'), findsOneWidget);
-    await tester.tap(find.text('Lokal speichern'));
+    expect(find.text('Hund hinzufügen'), findsNWidgets(2));
+    await tester.tap(find.widgetWithText(FilledButton, 'Lokal speichern'));
     await tester.pumpAndSettle();
     expect(find.text('Name erforderlich'), findsOneWidget);
 
@@ -26,7 +26,7 @@ void main() {
     await tester.enterText(find.widgetWithText(TextFormField, 'Rasse / Typ'), 'Pudel');
     await tester.enterText(find.widgetWithText(TextFormField, 'Alter in Jahren'), '3');
     await tester.enterText(find.widgetWithText(TextFormField, 'Gewicht in kg'), '8.5');
-    await tester.tap(find.text('Lokal speichern'));
+    await tester.tap(find.widgetWithText(FilledButton, 'Lokal speichern'));
     await tester.pumpAndSettle();
 
     expect(find.text('Luna'), findsOneWidget);
@@ -39,7 +39,7 @@ void main() {
     expect(find.text('DogGuard Rescue'), findsOneWidget);
     expect(find.textContaining('sendet keine SOS-Nachricht'), findsOneWidget);
 
-    await tester.tap(find.text('Hund als vermisst melden'));
+    await tester.tap(find.widgetWithText(FilledButton, 'Hund als vermisst melden'));
     await tester.pumpAndSettle();
     expect(find.text('Vermisstmeldung vorbereiten'), findsOneWidget);
     expect(find.textContaining('Es wird nichts veröffentlicht oder versendet'), findsOneWidget);
