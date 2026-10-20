@@ -2,34 +2,34 @@
 
 Updated: 2026-10-20
 
-## Verified repository facts
+## Implemented in Flutter source on `beta-rebuild`
 
-- Flutter source branch: `beta-rebuild`
-- Package version in `pubspec.yaml`: `0.1.0+1`
-- App bundle target documented as `com.dogguard.app`
-- Current files include login, dashboard, dog profiles, health records, rescue, experts and profile pages.
-- Existing login screen routes to the dashboard when the button is pressed; the UI itself must not be treated as evidence of a verified account or secure backend session.
-- A `test/widget_test.dart` exists, but a successful Flutter test run has not been verified in a macOS/Xcode environment as part of this change.
-- A TestFlight archive/signature has not been produced or verified.
+- Demo login now labels itself as non-authenticating and warns not to enter a real password.
+- Dashboard identifies sample content as demo data.
+- Dog profiles can be added and edited during the current session with basic input validation.
+- Health records can be added during the current session.
+- Missing/found dog report form prepares only a local demo record; no location is accessed and no report or SOS is sent.
+- Expert directory/profile UI identifies unconnected features.
+- Widget tests have been added for selected demo flows.
+- README, iOS TestFlight instructions, security checklist and beta implementation notes are available in `docs/`.
+- `.gitignore` now excludes common secret files and Apple signing material.
+- A Flutter analyze/test workflow is present at `.github/workflows/flutter-ci.yml`.
 
-## Release blockers
+## Not yet verified
 
-- [ ] Install Flutter and validate `flutter doctor -v`.
-- [ ] Run `flutter pub get`, `flutter analyze` and `flutter test`; fix any failures.
-- [ ] Verify that `ios/Runner.xcworkspace` and iOS platform scaffolding exist. If absent, back up and commit before running `flutter create --platforms=ios .`.
-- [ ] Configure bundle identifier, Apple Developer Team, provisioning/signing and any required entitlements in Xcode.
-- [ ] Implement and test real backend authentication and session expiry.
-- [ ] Persist dog and health data with per-account authorization; verify no sensitive data leaks between accounts.
-- [ ] Implement SOS delivery with explicit permission, confirmation, delivery status, failure/retry handling and safety copy.
-- [ ] Implement push notification service and permission lifecycle if included in scope.
-- [ ] Review storage, telemetry, logs, privacy notices and App Store privacy declarations.
-- [ ] Device-test on supported iPhones, including denied permissions, no network, empty data, errors, Dynamic Type and VoiceOver.
-- [ ] Build a signed IPA using macOS/Xcode and upload to App Store Connect TestFlight.
+- The current tool session has not produced a successful Flutter analysis or widget-test result. GitHub workflow/status queries returned no check runs for the inspected commit, so do not assume CI passed.
+- iOS build scaffolding, signing, physical-device operation, and TestFlight upload have not been verified.
+- The PR remains draft and unmerged; no changes have been merged into `main`.
 
-## Credential incident handling
+## Critical release blockers
 
-The user uploaded a file named `openai-api-key.txt` in this conversation. Do not copy its content into source, logs, issues or commits. Treat the credential as exposed and revoke it in the provider dashboard; then issue a replacement. Do not claim that revocation happened unless the provider confirms it. Never put a private provider key in a mobile client application.
+- Real backend authentication and per-account authorization.
+- Durable, secure, owner-isolated storage and cloud sync.
+- Fully implemented and tested SOS delivery semantics, maps/location consent, and push notifications if in scope.
+- Real expert provider data and verification.
+- Privacy notices, deletion/export flows, accessibility and offline/error handling.
+- Successful CI, signed IPA, physical iPhone test, App Store Connect and TestFlight validation.
 
-## Status discipline
+## Secret handling
 
-No release-ready, successful build, passing-tests, secure-storage, SOS-delivery or TestFlight claim may be made unless the corresponding check was actually executed and its output reviewed.
+The file `openai-api-key.txt` was shared as plaintext in the conversation. It was not copied into this source tree. Treat that credential as exposed and revoke it in the provider dashboard, then create a replacement. Revocation has not been confirmed here. Never embed an OpenAI private key in Flutter/Dart code or the mobile app bundle; use a trusted server-side endpoint instead.
