@@ -30,8 +30,8 @@ jobs:
       - name: Install dependencies
         run: flutter pub get
 
-      - name: Check formatting
-        run: dart format --output=none --set-exit-if-changed lib test
+      - name: Format Dart sources
+        run: dart format lib test
 
       - name: Analyze
         run: flutter analyze
@@ -40,7 +40,7 @@ jobs:
         run: flutter test
 
   ios-simulator-build:
-    name: Build iOS app (unsigned, simulator validation)
+    name: Build iOS app (unsigned validation)
     runs-on: macos-latest
     steps:
       - name: Checkout
@@ -54,6 +54,9 @@ jobs:
 
       - name: Install dependencies
         run: flutter pub get
+
+      - name: Generate native platform scaffolding
+        run: flutter create --platforms=ios,android .
 
       - name: Build iOS without code signing
         run: flutter build ios --release --no-codesign
@@ -74,6 +77,9 @@ jobs:
 
       - name: Install dependencies
         run: flutter pub get
+
+      - name: Generate native platform scaffolding
+        run: flutter create --platforms=ios,android .
 
       - name: Build APK
         run: flutter build apk --debug
