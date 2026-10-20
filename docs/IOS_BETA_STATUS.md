@@ -1,35 +1,37 @@
 # DogGuard iOS Beta Status
 
 Updated: 2026-10-20
+Bundle ID target: `com.credibilitylions.dogguard`
 
-## Implemented in Flutter source on `beta-rebuild`
+## Implemented on `beta-rebuild`
 
-- Demo login now labels itself as non-authenticating and warns not to enter a real password.
-- Dashboard identifies sample content as demo data.
-- Dog profiles can be added and edited during the current session with basic input validation.
-- Health records can be added during the current session.
-- Missing/found dog report form prepares only a local demo record; no location is accessed and no report or SOS is sent.
-- Expert directory/profile UI identifies unconnected features.
-- Widget tests have been added for selected demo flows.
-- README, iOS TestFlight instructions, security checklist and beta implementation notes are available in `docs/`.
-- `.gitignore` now excludes common secret files and Apple signing material.
-- A Flutter analyze/test workflow is present at `.github/workflows/flutter-ci.yml`.
+- Demo UI clearly labels login and sample content; no real authentication is performed.
+- Dog profiles and health records can be entered locally during the current session.
+- Missing/found dog report form only prepares a local demo record; no location is accessed and no SOS/report is sent.
+- Expert directory and profile identify unconnected features.
+- Widget tests cover selected demo flows.
+- GitHub Actions workflow runs Flutter formatting, analysis and tests, requests an unsigned iOS build on macOS, and prepares an Android debug APK artifact.
 
-## Not yet verified
+## Current verification state
 
-- The current tool session has not produced a successful Flutter analysis or widget-test result. GitHub workflow/status queries returned no check runs for the inspected commit, so do not assume CI passed.
-- iOS build scaffolding, signing, physical-device operation, and TestFlight upload have not been verified.
-- The PR remains draft and unmerged; no changes have been merged into `main`.
+- Bundle ID selected for the app: `com.credibilitylions.dogguard`.
+- The iOS Xcode project file `ios/Runner.xcodeproj/project.pbxproj` was not found in the checked `beta-rebuild` branch. The iOS project scaffolding must be generated and committed before a standard iOS build can succeed.
+- No successful Flutter analyze/test or iOS build result has been confirmed in this tool session. Do not assume CI passed.
+- Apple signing, physical iPhone validation, App Store Connect setup and TestFlight upload have not been verified.
+- The pull request remains draft/unmerged; `main` has not been changed by the pull request.
 
-## Critical release blockers
+## Required next actions
 
-- Real backend authentication and per-account authorization.
-- Durable, secure, owner-isolated storage and cloud sync.
-- Fully implemented and tested SOS delivery semantics, maps/location consent, and push notifications if in scope.
-- Real expert provider data and verification.
-- Privacy notices, deletion/export flows, accessibility and offline/error handling.
-- Successful CI, signed IPA, physical iPhone test, App Store Connect and TestFlight validation.
+1. Generate/check in iOS scaffolding on macOS using a compatible Flutter SDK (first back up the branch), then set the Runner bundle identifier to `com.credibilitylions.dogguard`.
+2. Open `ios/Runner.xcworkspace` in Xcode and choose the correct Apple Developer Team under Signing & Capabilities. Confirm automatic signing and the registered App ID match this Bundle ID.
+3. Run `flutter pub get`, `dart format --output=none --set-exit-if-changed lib test`, `flutter analyze`, `flutter test`, and `flutter build ios --release --no-codesign`.
+4. Fix all build/test errors; test on a physical iPhone.
+5. Create/confirm the matching app record in App Store Connect, archive/sign and upload using Xcode or `flutter build ipa --release` on the authorized Mac, then validate the build in TestFlight.
 
-## Secret handling
+## Product readiness blockers
 
-The file `openai-api-key.txt` was shared as plaintext in the conversation. It was not copied into this source tree. Treat that credential as exposed and revoke it in the provider dashboard, then create a replacement. Revocation has not been confirmed here. Never embed an OpenAI private key in Flutter/Dart code or the mobile app bundle; use a trusted server-side endpoint instead.
+This branch is still a UI prototype: real authentication and authorization, secure persistent storage/cloud sync, production SOS and consent handling, real provider data, privacy/data deletion flows, offline/error handling and end-to-end testing remain outstanding. Do not advertise it as a functioning safety/rescue service until implemented and tested.
+
+## Security
+
+Never commit Apple signing credentials, API keys, certificates with private keys, or provisioning secrets. Any API key shared in plaintext should be revoked in the provider dashboard; revocation is not confirmed here. Private OpenAI keys must remain on a trusted server-side endpoint, never in the mobile app bundle.
