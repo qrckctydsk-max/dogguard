@@ -2,7 +2,7 @@ name: DogGuard Flutter CI
 
 on:
   push:
-    branches: ["main"]
+    branches: ["main", "beta-rebuild"]
   pull_request:
     branches: ["main"]
   workflow_dispatch:
