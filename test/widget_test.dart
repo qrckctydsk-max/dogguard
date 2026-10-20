@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:dogguard/app.dart';
-import 'package:dogguard/features.rescue/rescue_page.dart';
-import 'package:dogguard/features.dogs/dogs_page.dart';
+import 'package:dogguard/features/rescue/rescue_page.dart';
+import 'package:dogguard/features/dogs/dogs_page.dart';
 
 void main() {
   testWidgets('DogGuard demo login renders with honest labeling', (tester) async {
