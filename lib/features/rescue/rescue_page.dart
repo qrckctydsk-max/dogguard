@@ -10,7 +10,6 @@ class RescuePage extends StatefulWidget {
 }
 
 class _RescuePageState extends State<RescuePage> {
-  final _formKey = GlobalKey<FormState>();
   final _dogController = TextEditingController();
   final _descriptionController = TextEditingController();
   String _kind = 'Vermisst';
@@ -24,6 +23,7 @@ class _RescuePageState extends State<RescuePage> {
   }
 
   Future<void> _showReportForm({required String kind}) async {
+    final formKey = GlobalKey<FormState>();
     setState(() {
       _kind = kind;
       _submitted = false;
@@ -40,7 +40,7 @@ class _RescuePageState extends State<RescuePage> {
             20, 8, 20, 20 + MediaQuery.of(context).viewInsets.bottom,
           ),
           child: Form(
-            key: _formKey,
+            key: formKey,
             child: SingleChildScrollView(
               child: Column(
                 mainAxisSize: MainAxisSize.min,
@@ -92,7 +92,7 @@ class _RescuePageState extends State<RescuePage> {
                   const SizedBox(height: 12),
                   FilledButton(
                     onPressed: () {
-                      if (!(_formKey.currentState?.validate() ?? false)) return;
+                      if (!(formKey.currentState?.validate() ?? false)) return;
                       Navigator.of(sheetContext).pop();
                       setState(() => _submitted = true);
                     },
