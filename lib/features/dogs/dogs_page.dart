@@ -101,6 +101,9 @@ class _DogsPageState extends State<DogsPage> {
       ),
     );
 
+    // Let the dialog route finish detaching its form fields before disposing
+    // the controllers; otherwise the exit transition can briefly read them.
+    await Future<void>.delayed(const Duration(milliseconds: 250));
     name.dispose();
     breed.dispose();
     age.dispose();
