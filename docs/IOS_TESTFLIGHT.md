@@ -2,7 +2,7 @@
 
 Current source branch: `beta-rebuild`
 
-This Flutter branch is a UI prototype. Do not distribute it as a production-ready safety app until authentication, data persistence, privacy controls, SOS behavior and tests have been implemented and reviewed.
+This Flutter branch is a local UI prototype. CI validation on 2026-10-21 passed for formatting, analysis, widget tests, and an unsigned iOS build. No signed IPA or TestFlight upload has been verified. Do not distribute it as a production-ready safety app until authentication, data persistence, privacy controls, SOS behavior and tests have been implemented and reviewed.
 
 ## Build prerequisites
 
@@ -39,4 +39,4 @@ This Flutter branch is a UI prototype. Do not distribute it as a production-read
 
 ## Current limitation
 
-This repository contains Flutter application source, not a verified signed iOS archive. A TestFlight build cannot be confirmed until the project is built and signed using the required Apple/Xcode environment.
+Current verified status (2026-10-24): GitHub Actions run [39588980029](https://github.com/qrckctydsk-max/dogguard/actions/runs/39588980029) successfully compiled iOS with `--no-codesign`. That validates compilation only. This repository has no verified signed iOS archive or App Store Connect upload; TestFlight is not confirmed until signing and upload are completed in the required Apple/Xcode/App Store Connect environment.
