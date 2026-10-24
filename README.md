@@ -63,3 +63,19 @@ Never put a private OpenAI API key or another server credential in Flutter/Dart 
 - Signed iOS archive, physical-device review and TestFlight validation
 
 Do not describe this prototype as release-ready or as actually notifying rescue services until the relevant implementation has been built and tested.
+
+
+## Verified CI status (2026-10-24)
+
+The latest successful validation run is [GitHub Actions run 39588980029](https://github.com/qrckctydsk-max/dogguard/actions/runs/39588980029) on `beta-rebuild` commit `24a67f4e2b3a44bf6168f6d29297f368a5efd3d1`:
+- `dart format lib test`, `flutter analyze`, and `flutter test`: passed.
+- iOS Release compile with `--no-codesign`: passed; this is **not** a signed IPA and does not mean TestFlight is available.
+- Android debug APK: built and uploaded as the `dogguard-debug-apk` artifact (about 70.7 MB), expiring 2027-01-19. This is a QA/debug artifact, **not** a Google Play Internal Testing release.
+- Older failed runs remain in Actions history; use the latest run above for the current validation result.
+
+## Beta distribution status (verified 2026-10-24)
+
+- **TestFlight:** no signed IPA or App Store Connect upload verified.
+- **Google Play Internal Testing:** no Play Console upload verified; only the GitHub debug APK artifact is available.
+- **GitHub release:** no release has been published.
+- **Public web beta:** https://dogguard.lovable.app loads the DogGuard page and beta sign-in. The product is a closed beta: testers need an account and must sign in. The Lovable editor preview URL is not the public site.
